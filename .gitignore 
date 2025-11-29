@@ -1,0 +1,86 @@
+# ===============================
+#  Core Ignores for Portfolio Site
+# ===============================
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# VS Code Settings (keep workspace clean)
+.vscode/
+.history/
+*.code-workspace
+
+# Node modules (in case you add tooling later)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build / Output directories (if you adopt bundlers)
+dist/
+build/
+out/
+.cache/
+.next/
+.nuxt/
+.svelte-kit/
+
+# Tailwind / PostCSS cache
+*.lock
+.pnpm-store/
+.pnp.*
+.cache/
+
+# Compiled CSS (if using preprocessors)
+*.min.css
+*.min.js
+
+# Environment variables (if you later add API integrations)
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# OS backup files
+*.swp
+*.swo
+*.orig
+
+# ==========
+#  Your Assets
+# ==========
+# Keep images and docs, but ignore raw design files
+assets/img/raw/
+assets/docs/private/
+
+# Ignore ZIPs or exported deliverables
+*.zip
+
+# GitHub Pages metadata
+.sass-cache
+.jekyll-cache/
+.jekyll-metadata
+_site/
+
+# ==========================
+#  Project-specific Ignores
+# ==========================
+
+# Ignore local preview servers
+.liveserver.json
+*.pid
+
+# Ignore any temporary dev folders you may create
+tmp/
+scratch/
+notes/
