@@ -554,3 +554,47 @@ body {
     font-size: 0.78rem;
   }
 }
+
+/* Back to Top Button */
+.back-to-top-wrapper {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 1rem;
+}
+
+.back-to-top-btn {
+  background: radial-gradient(circle at 10% 0, #38bdf8, #0ea5e9);
+  color: #0b1120;
+  padding: 0.7rem 1.8rem;
+  border-radius: 50px;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(8, 47, 73, 0.9);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.back-to-top-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(56, 189, 248, 0.8);
+}
+
+.back-to-top-btn:active {
+  transform: scale(0.97);
+}
+
+/* Equally space the Back to Top button between main and footer */
+.back-to-top-section {
+  padding-top: 0.1rem;
+  padding-bottom: 2.5rem;
+
+  /* optional for visual consistency with other sections */
+  background: transparent;
+}
+
+.back-to-top-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
