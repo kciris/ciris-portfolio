@@ -39,19 +39,44 @@
 <div id="portfolio-chat-widget" class="pcw-closed">
   <div id="pcw-window">
     <div id="pcw-header">
-      <span>Kazim’s AI Assistant</span>
-      <button id="pcw-close-btn">&times;</button>
+      <div class="pcw-title-block">
+        <div class="pcw-title">Interview Kazim (AI)</div>
+        <div class="pcw-subtitle">Ask me questions as if we’re in a live interview.</div>
+      </div>
+      <button id="pcw-close-btn" type="button">&times;</button>
     </div>
+
+    <div id="pcw-suggested">
+      <span class="pcw-chip" data-q="Can you briefly introduce yourself for this role?">
+        Intro for this role
+      </span>
+      <span class="pcw-chip" data-q="Walk me through your DevOps and cloud experience.">
+        DevOps & Cloud
+      </span>
+      <span class="pcw-chip" data-q="Tell me about a difficult project and how you handled it.">
+        Difficult project
+      </span>
+      <span class="pcw-chip" data-q="How does your teaching and mentoring experience help you in industry roles?">
+        Teaching → Industry
+      </span>
+    </div>
+
     <div id="pcw-messages"></div>
+
     <form id="pcw-form">
-      <input type="text" id="pcw-input" placeholder="Ask me anything..." autocomplete="off" />
+      <input
+        type="text"
+        id="pcw-input"
+        placeholder="Ask a question you would ask Kazim in an interview..."
+        autocomplete="off"
+      />
       <button type="submit">Send</button>
     </form>
   </div>
 
-  <button id="pcw-toggle-btn">Chat</button>
-
+  <button id="pcw-toggle-btn" type="button">Interview</button>
 </div>
+
 
 <script src="assets/js/chat-widget.js"></script>
 

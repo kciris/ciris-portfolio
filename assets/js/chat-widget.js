@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Replace with your actual backend URL
   const backendUrl = "https://portfolio-agent-backend-djpe.onrender.com/chat";
 
   const widget = document.getElementById("portfolio-chat-widget");
@@ -8,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const messagesEl = document.getElementById("pcw-messages");
   const form = document.getElementById("pcw-form");
   const input = document.getElementById("pcw-input");
+  const chips = document.querySelectorAll(".pcw-chip");
 
   if (!widget || !toggleBtn || !closeBtn || !messagesEl || !form || !input) {
     console.error("Chat widget elements not found in DOM.");
@@ -37,6 +37,16 @@ document.addEventListener("DOMContentLoaded", function () {
     widget.classList.add("pcw-closed");
   });
 
+  chips.forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      const q = chip.getAttribute("data-q");
+      if (q) {
+        input.value = q;
+        form.dispatchEvent(new Event("submit"));
+      }
+    });
+  });
+
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
     const text = input.value.trim();
@@ -45,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
     addMessage("user", text);
     input.value = "";
 
-    addMessage("assistant", "Thinking...");
+    addMessage("assistant", "Let me think about how to answer that as I would in a real interview...");
     const thinkingNode = messagesEl.lastChild;
 
     try {
@@ -60,6 +70,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (data.reply) {
         addMessage("assistant", data.reply);
+      } else if (data.error) {
+        if (data.error.toLowerCase().includes("quota")) {
+          addMessage(
+            "assistant",
+            "I temporarily cannot access the AI engine (API quota issue), but normally I would answer with details from my background."
+          );
+        } else {
+          addMessage("assistant", "Server error: " + data.error);
+        }
       } else {
         addMessage("assistant", "No response from server.");
       }
@@ -70,6 +89,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Welcome message
-  addMessage("assistant", "Hello! How can I help you?");
+  // Interview-style welcome message
+  addMessage(
+    "assistant",
+    "Hi, I’m Kazim. You can interview me here – ask about my background, experience, DevOps, cybersecurity, teaching, or specific roles you have in mind."
+  );
 });
