@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Replace with your actual backend URL
-  const backendUrl = "https://portfolio-agent-backend-djpe.onrender.com";
+  const backendUrl = "https://portfolio-agent-backend-djpe.onrender.com/chat";
 
   const widget = document.getElementById("portfolio-chat-widget");
   const toggleBtn = document.getElementById("pcw-toggle-btn");
