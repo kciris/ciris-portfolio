@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+html {
+scroll-behavior: smooth;
+}
+
 
 <head>
   <meta charset="UTF-8" />
@@ -64,17 +68,17 @@
     <div id="pcw-messages"></div>
 
     <form id="pcw-form">
-      <input
-        type="text"
-        id="pcw-input"
-        placeholder="Ask a question you would ask Kazim in an interview..."
-        autocomplete="off"
-      />
+      <input type="text" id="pcw-input" placeholder="Ask a question you would ask Kazim in an interview..."
+        autocomplete="off" />
       <button type="submit">Send</button>
     </form>
   </div>
 
-  <button id="pcw-toggle-btn" type="button">Interview</button>
+  <button id="pcw-toggle-btn" type="button">
+    <span class="pcw-toggle-icon">💬</span>
+    <span class="pcw-toggle-text">Interview Me</span>
+  </button>
+
 </div>
 
 
@@ -95,6 +99,7 @@
             <a href="#experience">Experience</a>
             <a href="#projects">Projects</a>
             <a href="#skills">Skills</a>
+            <a href="#ai-mode-anchor">AI Mode</a>
             <a href="#contact">Contact</a>
           </nav>
         </div>
@@ -407,6 +412,15 @@
   </footer>
 
   <script src="assets/js/main.js"></script>
+
+  <!-- Anchor target for AI Mode nav -->
+  <div id="ai-mode-anchor"></div>
+
+  <!-- Interview Kazim (AI) chat widget -->
+  <div id="portfolio-chat-widget" class="pcw-closed">
+    <!-- existing chat window + button here -->
+  </div>
+
 
 </body>
 
