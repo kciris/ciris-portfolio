@@ -4,17 +4,29 @@ document.addEventListener("DOMContentLoaded", function () {
   const widget = document.getElementById("portfolio-chat-widget");
   const toggleBtn = document.getElementById("pcw-toggle-btn");
   const closeBtn = document.getElementById("pcw-close-btn");
+  const endBtn = document.getElementById("pcw-end-btn");
   const messagesEl = document.getElementById("pcw-messages");
   const form = document.getElementById("pcw-form");
   const input = document.getElementById("pcw-input");
   const chips = document.querySelectorAll(".pcw-chip");
+  const aiModeNav = document.getElementById("nav-ai-mode");
+  const aiModeAnchor = document.getElementById("ai-mode-anchor");
 
   if (!widget || !toggleBtn || !closeBtn || !messagesEl || !form || !input) {
     console.error("Chat widget elements not found in DOM.");
     return;
   }
 
-  const sessionId = "sess-" + Math.random().toString(36).slice(2);
+  // Session ID – new one per "session"
+  let sessionId = createSessionId();
+
+  function createSessionId() {
+    return "sess-" + Math.random().toString(36).slice(2);
+  }
+
+  function clearMessages() {
+    messagesEl.innerHTML = "";
+  }
 
   function addMessage(role, text) {
     const div = document.createElement("div");
@@ -29,14 +41,48 @@ document.addEventListener("DOMContentLoaded", function () {
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
 
+  function showWelcomeMessage() {
+    addMessage(
+      "assistant",
+      "Hi, I’m Kazim. You can interview me here — ask about my background, DevOps, cybersecurity, teaching experience, or specific roles you have in mind."
+    );
+  }
+
+  // Initialize with one welcome message
+  clearMessages();
+  showWelcomeMessage();
+
+  // Toggle chat window
   toggleBtn.addEventListener("click", function () {
     widget.classList.toggle("pcw-closed");
+    if (!widget.classList.contains("pcw-closed")) {
+      input.focus();
+    }
   });
 
+  // Close button just hides, keeps session
   closeBtn.addEventListener("click", function () {
     widget.classList.add("pcw-closed");
   });
 
+  // End button: end interview session
+  endBtn.addEventListener("click", function () {
+    // New session id = new conversation on backend
+    sessionId = createSessionId();
+
+    // Clear messages and show a short "session ended" + new welcome
+    clearMessages();
+    addMessage(
+      "assistant",
+      "This interview session has ended. When you’re ready, you can start a new interview with me."
+    );
+    // Optionally add the welcome again:
+    setTimeout(() => {
+      showWelcomeMessage();
+    }, 800);
+  });
+
+  // Suggested question chips
   chips.forEach(function (chip) {
     chip.addEventListener("click", function () {
       const q = chip.getAttribute("data-q");
@@ -47,6 +93,26 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  // AI Mode nav: scroll + open widget + focus input
+  if (aiModeNav) {
+    aiModeNav.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      if (aiModeAnchor) {
+        aiModeAnchor.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      // Open the widget if closed
+      widget.classList.remove("pcw-closed");
+
+      // Focus input after a small delay so it’s visible
+      setTimeout(() => {
+        input.focus();
+      }, 400);
+    });
+  }
+
+  // Form submit: send question to backend
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
     const text = input.value.trim();
@@ -55,7 +121,10 @@ document.addEventListener("DOMContentLoaded", function () {
     addMessage("user", text);
     input.value = "";
 
-    addMessage("assistant", "Let me think about how to answer that as I would in a real interview...");
+    addMessage(
+      "assistant",
+      "Let me think about how to answer that as I would in a real interview..."
+    );
     const thinkingNode = messagesEl.lastChild;
 
     try {
@@ -74,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (data.error.toLowerCase().includes("quota")) {
           addMessage(
             "assistant",
-            "I temporarily cannot access the AI engine (API quota issue), but normally I would answer with details from my background."
+            "I can’t access the AI engine right now (API quota issue). Once the quota is topped up, I’ll be able to answer again."
           );
         } else {
           addMessage("assistant", "Server error: " + data.error);
@@ -88,10 +157,4 @@ document.addEventListener("DOMContentLoaded", function () {
       addMessage("assistant", "Network error.");
     }
   });
-
-  // Interview-style welcome message
-  addMessage(
-    "assistant",
-    "Hi, I’m Kazim. You can interview me here – ask about my background, experience, DevOps, cybersecurity, teaching, or specific roles you have in mind."
-  );
 });

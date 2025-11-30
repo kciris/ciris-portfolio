@@ -812,3 +812,25 @@ body {
     right: 3vw;
   }
 }
+
+.pcw-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#pcw-end-btn {
+  font-size: 0.7rem;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid #374151;
+  background: #111827;
+  color: #e5e7eb;
+  cursor: pointer;
+}
+
+#pcw-end-btn:hover {
+  background: #b91c1c;
+  border-color: #dc2626;
+  color: #f9fafb;
+}
