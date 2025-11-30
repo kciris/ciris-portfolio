@@ -42,13 +42,18 @@ scroll-behavior: smooth;
 <!-- Chat widget root -->
 <div id="portfolio-chat-widget" class="pcw-closed">
   <div id="pcw-window">
+
     <div id="pcw-header">
-      <div class="pcw-title-block">
-        <div class="pcw-title">Interview Kazim (AI)</div>
-        <div class="pcw-subtitle">Ask me questions as if we’re in a live interview.</div>
-      </div>
-      <button id="pcw-close-btn" type="button">&times;</button>
-    </div>
+  <div class="pcw-title-block">
+    <div class="pcw-title">Interview Kazim (AI)</div>
+    <div class="pcw-subtitle">Ask me questions as if we’re in a live interview.</div>
+  </div>
+  <div class="pcw-header-actions">
+    <button id="pcw-end-btn" type="button">End</button>
+    <button id="pcw-close-btn" type="button">&times;</button>
+  </div>
+</div>
+
 
     <div id="pcw-suggested">
       <span class="pcw-chip" data-q="Can you briefly introduce yourself for this role?">
@@ -99,7 +104,7 @@ scroll-behavior: smooth;
             <a href="#experience">Experience</a>
             <a href="#projects">Projects</a>
             <a href="#skills">Skills</a>
-            <a href="#ai-mode-anchor">AI Mode</a>
+            <a href="#ai-mode-anchor" id="nav-ai-mode">AI Mode</a>
             <a href="#contact">Contact</a>
           </nav>
         </div>
