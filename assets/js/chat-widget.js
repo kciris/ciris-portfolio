@@ -1,5 +1,5 @@
-(function () {
-  // 🔴 Replace with your actual deployed backend URL
+document.addEventListener("DOMContentLoaded", function () {
+  // Replace with your actual backend URL
   const backendUrl = "https://portfolio-agent-backend-djpe.onrender.com";
 
   const widget = document.getElementById("portfolio-chat-widget");
@@ -9,7 +9,11 @@
   const form = document.getElementById("pcw-form");
   const input = document.getElementById("pcw-input");
 
-  // Unique session per visitor
+  if (!widget || !toggleBtn || !closeBtn || !messagesEl || !form || !input) {
+    console.error("Chat widget elements not found in DOM.");
+    return;
+  }
+
   const sessionId = "sess-" + Math.random().toString(36).slice(2);
 
   function addMessage(role, text) {
@@ -25,15 +29,15 @@
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
 
-  toggleBtn.addEventListener("click", () => {
+  toggleBtn.addEventListener("click", function () {
     widget.classList.toggle("pcw-closed");
   });
 
-  closeBtn.addEventListener("click", () => {
+  closeBtn.addEventListener("click", function () {
     widget.classList.add("pcw-closed");
   });
 
-  form.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", async function (e) {
     e.preventDefault();
     const text = input.value.trim();
     if (!text) return;
@@ -48,7 +52,7 @@
       const res = await fetch(backendUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text, sessionId }),
+        body: JSON.stringify({ message: text, sessionId: sessionId }),
       });
 
       const data = await res.json();
@@ -57,20 +61,15 @@
       if (data.reply) {
         addMessage("assistant", data.reply);
       } else {
-        addMessage("assistant", "Sorry, I could not get a response from the server.");
+        addMessage("assistant", "No response from server.");
       }
     } catch (err) {
       console.error(err);
       messagesEl.removeChild(thinkingNode);
-      addMessage("assistant", "Network error, please try again later.");
+      addMessage("assistant", "Network error.");
     }
   });
 
-  // Optional welcome message
-  addMessage(
-    "assistant",
-    "👋 Hi! I’m Kazim’s AI assistant. Ask me about my experience, projects, DevOps, cyber, or 
-research."
-  );
-})();
-
+  // Welcome message
+  addMessage("assistant", "Hello! How can I help you?");
+});
