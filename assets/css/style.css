@@ -617,3 +617,91 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+/* AI Section */
+#portfolio-chat-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  font-family: system-ui, sans-serif;
+}
+
+#pcw-window {
+  width: 320px;
+  max-height: 480px;
+  background: #0f172a;
+  color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  margin-bottom: 10px;
+}
+
+#pcw-header {
+  padding: 8px;
+  background: #1e293b;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#pcw-messages {
+  padding: 10px;
+  flex: 1;
+  overflow-y: auto;
+  font-size: 0.9rem;
+}
+
+#pcw-form {
+  display: flex;
+  border-top: 1px solid #334155;
+}
+
+#pcw-input {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  background: #020617;
+  color: white;
+}
+
+#pcw-form button {
+  border: none;
+  padding: 8px 12px;
+  background: #2563eb;
+  color: white;
+}
+
+#pcw-toggle-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+#portfolio-chat-widget.pcw-closed #pcw-window {
+  display: none;
+}
+
+.pcw-msg-user span {
+  background: #2563eb;
+  padding: 6px 10px;
+  border-radius: 10px 10px 0 10px;
+  display: inline-block;
+  margin-left: auto;
+}
+
+.pcw-msg-assistant span {
+  background: #1e293b;
+  padding: 6px 10px;
+  border-radius: 10px;
+  display: inline-block;
+  margin-right: auto;
+}

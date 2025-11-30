@@ -9,29 +9,49 @@
     content="Portfolio of Cd&apos;Kazim Ciris, PhD — Postdoctoral Fellow and Software Project Manager specializing in software development, cybersecurity, and data-driven projects." />
   <link rel="stylesheet" href="assets/css/style.css" />
 
-<!-- Basic Meta -->
-<title>Kazim Ciris – Portfolio</title>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="Software Project Manager · Postdoctoral Fellow · Full-Stack & DevOps Portfolio" />
+  <!-- Basic Meta -->
+  <title>Kazim Ciris – Portfolio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Software Project Manager · Postdoctoral Fellow · Full-Stack & DevOps Portfolio" />
 
-<!-- Open Graph / LinkedIn / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://kciris.github.io/ciris-portfolio/" />
-<meta property="og:title" content="Kazim Ciris – Portfolio" />
-<meta property="og:description" content="Software Project Manager · Postdoctoral Fellow · Full-Stack & DevOps Portfolio" />
-<meta property="og:image" content="https://kciris.github.io/ciris-portfolio/assets/img/thumbnail.jpeg" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="627" />
+  <!-- Open Graph / LinkedIn / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kciris.github.io/ciris-portfolio/" />
+  <meta property="og:title" content="Kazim Ciris – Portfolio" />
+  <meta property="og:description"
+    content="Software Project Manager · Postdoctoral Fellow · Full-Stack & DevOps Portfolio" />
+  <meta property="og:image" content="https://kciris.github.io/ciris-portfolio/assets/img/thumbnail.jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="627" />
 
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Kazim Ciris – Portfolio" />
-<meta name="twitter:description" content="Software Project Manager · Postdoctoral Fellow · Full-Stack & DevOps Portfolio" />
-<meta name="twitter:image" content="https://kciris.github.io/ciris-portfolio/assets/img/thumbnail.jpeg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Kazim Ciris – Portfolio" />
+  <meta name="twitter:description"
+    content="Software Project Manager · Postdoctoral Fellow · Full-Stack & DevOps Portfolio" />
+  <meta name="twitter:image" content="https://kciris.github.io/ciris-portfolio/assets/img/thumbnail.jpeg" />
 
 
 </head>
+
+<!-- Chat widget root -->
+<div id="portfolio-chat-widget" class="pcw-closed">
+  <div id="pcw-window">
+    <div id="pcw-header">
+      <span>Kazim’s AI Assistant</span>
+      <button id="pcw-close-btn">&times;</button>
+    </div>
+    <div id="pcw-messages"></div>
+    <form id="pcw-form">
+      <input type="text" id="pcw-input" placeholder="Ask me anything..." autocomplete="off" />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <button id="pcw-toggle-btn">💬</button>
+</div>
+
 
 <body>
   <header class="site-header">
@@ -360,6 +380,8 @@
   </footer>
 
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/chat-widget.js"></script>
+
 </body>
 
 </html>
