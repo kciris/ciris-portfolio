@@ -560,7 +560,6 @@ body {
 .hero-panel {
   order: -1;
 }
-}
 
 @media (max-width: 600px) {
   .avatar {
