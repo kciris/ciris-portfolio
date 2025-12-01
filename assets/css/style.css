@@ -671,6 +671,7 @@ body {
 
 /* Chat window */
 #pcw-window {
+  position: relative;
   width: 340px;
 
   /* Keep the header inside the viewport on small screens */
@@ -889,6 +890,103 @@ body {
     align-self: flex-end;
   }
 }
+
+/* End-session confirmation overlay (sits on top of the chat window) */
+.pcw-session-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 20% 0, rgba(30, 64, 175, 0.75), #020617);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.98);
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+}
+
+.pcw-session-overlay--visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+.pcw-session-dialog {
+  max-width: 260px;
+  padding: 0.9rem 1rem;
+  border-radius: 0.9rem;
+  background: var(--card-bg, #020617);
+  border: 1px solid var(--border-subtle, rgba(148, 163, 184, 0.5));
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
+}
+
+.pcw-session-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: var(--text, #e5e7eb);
+}
+
+.pcw-session-text {
+  font-size: 0.8rem;
+  color: var(--text-muted, #9ca3af);
+  margin-bottom: 0.7rem;
+}
+
+.pcw-session-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.4rem;
+}
+
+.pcw-session-btn {
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.8rem;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* Button variants */
+.pcw-session-btn-secondary {
+  background: #0b1120;
+  color: #e5e7eb;
+  border: 1px solid #4b5563;
+}
+
+.pcw-session-btn-secondary:hover {
+  background: #111827;
+}
+
+.pcw-session-btn-danger {
+  background: #ef4444;
+  color: #f9fafb;
+}
+
+.pcw-session-btn-danger:hover {
+  background: #dc2626;
+}
+
+/* Light mode tweaks */
+body.light-mode .pcw-session-dialog {
+  background: #ffffff;
+  border-color: rgba(148, 163, 184, 0.7);
+}
+
+body.light-mode .pcw-session-title {
+  color: #111827;
+}
+
+body.light-mode .pcw-session-text {
+  color: #4b5563;
+}
+
 
 /* =========================================
    Light Mode Overrides
