@@ -41,3 +41,35 @@ if (backBtn) {
   });
 }
 
+// ========================
+// Dark / Light mode toggle
+// ========================
+(function () {
+  const toggleBtn = document.getElementById("theme-toggle");
+  if (!toggleBtn) return;
+
+  const body = document.body;
+
+  // Load saved theme or default to dark
+  const savedTheme = localStorage.getItem("theme") || "dark";
+  if (savedTheme === "light") {
+    body.classList.add("light-mode");
+    toggleBtn.textContent = "☀️ Light";
+  } else {
+    body.classList.remove("light-mode");
+    toggleBtn.textContent = "🌙 Dark";
+  }
+
+  toggleBtn.addEventListener("click", () => {
+    const isLight = body.classList.toggle("light-mode");
+    if (isLight) {
+      toggleBtn.textContent = "☀️ Light";
+      localStorage.setItem("theme", "light");
+    } else {
+      toggleBtn.textContent = "🌙 Dark";
+      localStorage.setItem("theme", "dark");
+    }
+  });
+})();
+
+
