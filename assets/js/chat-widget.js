@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const toggleBtn = document.getElementById("pcw-toggle-btn");
   const closeBtn = document.getElementById("pcw-close-btn");
   const endBtn = document.getElementById("pcw-end-btn");
+  const sessionOverlay = document.getElementById("pcw-session-overlay");
+  const sessionConfirmBtn = document.getElementById("pcw-session-confirm");
+  const sessionCancelBtn = document.getElementById("pcw-session-cancel");
   const messagesEl = document.getElementById("pcw-messages");
   const form = document.getElementById("pcw-form");
   const input = document.getElementById("pcw-input");
@@ -65,22 +68,47 @@ document.addEventListener("DOMContentLoaded", function () {
     widget.classList.add("pcw-closed");
   });
 
-  // End button: end interview session
+ // End button: show in-widget end-session overlay
+if (endBtn && sessionOverlay && sessionConfirmBtn && sessionCancelBtn) {
+  const openOverlay = () => {
+    sessionOverlay.classList.add("pcw-session-overlay--visible");
+    sessionOverlay.setAttribute("aria-hidden", "false");
+  };
+
+  const closeOverlay = () => {
+    sessionOverlay.classList.remove("pcw-session-overlay--visible");
+    sessionOverlay.setAttribute("aria-hidden", "true");
+  };
+
   endBtn.addEventListener("click", function () {
+    openOverlay();
+  });
+
+  sessionCancelBtn.addEventListener("click", function (event) {
+    event.preventDefault();
+    closeOverlay();
+  });
+
+  sessionConfirmBtn.addEventListener("click", function (event) {
+    event.preventDefault();
+    closeOverlay();
+
     // New session id = new conversation on backend
     sessionId = createSessionId();
 
-    // Clear messages and show a short "session ended" + new welcome
+    // Clear messages and show "session ended" + new welcome
     clearMessages();
     addMessage(
       "assistant",
       "This interview session has ended. When you’re ready, you can start a new interview with me."
     );
-    // Optionally add the welcome again:
+
     setTimeout(() => {
       showWelcomeMessage();
     }, 800);
   });
+}
+
 
   // Suggested question chips
   chips.forEach(function (chip) {

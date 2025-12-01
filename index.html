@@ -39,6 +39,11 @@
   />
 </head>
 
+
+
+
+
+
 <body>
   <header class="site-header">
     <div class="container header-inner">
@@ -68,6 +73,8 @@
 
     </div>
   </header>
+
+
 
   <main>
     <!-- Hero Section -->
@@ -387,6 +394,40 @@
           <button id="pcw-close-btn" type="button">&times;</button>
         </div>
       </div>
+
+      <!-- End-session overlay (hidden by default) -->
+<div
+  id="pcw-session-overlay"
+  class="pcw-session-overlay"
+  aria-hidden="true"
+  role="alertdialog"
+  aria-labelledby="pcw-session-title"
+>
+  <div class="pcw-session-dialog">
+    <div id="pcw-session-title" class="pcw-session-title">
+      End this interview?
+    </div>
+    <div class="pcw-session-text">
+      This will clear the conversation and start a new session.
+    </div>
+    <div class="pcw-session-actions">
+      <button
+        type="button"
+        id="pcw-session-cancel"
+        class="pcw-session-btn pcw-session-btn-secondary"
+      >
+        Cancel
+      </button>
+      <button
+        type="button"
+        id="pcw-session-confirm"
+        class="pcw-session-btn pcw-session-btn-danger"
+      >
+        End session
+      </button>
+    </div>
+  </div>
+</div>
 
       <div id="pcw-suggested">
         <span class="pcw-chip" data-q="Can you briefly introduce yourself for this role?">
