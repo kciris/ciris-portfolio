@@ -486,6 +486,7 @@ body {
   border-top: 1px solid rgba(148, 163, 184, 0.3);
   padding: 1.4rem 0 2.5rem;
   background: rgba(3, 7, 18, 0.95);
+  padding-bottom: 80px;
 }
 
 .footer-inner {
@@ -506,6 +507,7 @@ body {
 .footer-links a {
   color: var(--text-muted);
   text-decoration: none;
+  margin-left: 10px;
 }
 
 .footer-links a:hover {
