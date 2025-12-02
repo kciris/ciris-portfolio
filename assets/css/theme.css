@@ -11,12 +11,12 @@ body.light-mode {
 body.light-mode,
 body.light-mode p,
 body.light-mode li,
-body.light-mode h1,
+body-light-mode h1,
 body.light-mode h2,
 body.light-mode h3,
-body.light-mode h4,
+body-light-mode h4,
 body.light-mode h5,
-body.light-mode h6,
+body-light-mode h6,
 body.light-mode span,
 body.light-mode .meta {
   color: #111827 !important;
@@ -108,18 +108,34 @@ body.light-mode .footer-right a {
   color: #4b5563;
 }
 
-/* Chat window in light mode */
+/* =========================================
+   Chat widget – light mode overrides
+   ========================================= */
+
+/* Chat window */
 body.light-mode #pcw-window {
   background: #ffffff;
-  border-color: #a8aeb8;
-  body.light-mode .pcw-msg-assistant span {
+  border-color: #686c77;
+  color: #111827;
+}
+
+/* Messages area */
+body.light-mode #pcw-messages {
+  background: #ffffff;
+  color: #111827;
+}
+
+/* Assistant messages */
+body.light-mode .pcw-msg-assistant span {
   background: #e5e7eb;
   color: #111827;
   border-color: #d1d5db;
 }
 
+/* Input row */
 body.light-mode #pcw-input {
   background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
   color: #111827;
 }
 
