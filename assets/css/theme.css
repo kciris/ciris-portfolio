@@ -1,0 +1,176 @@
+/* =========================================
+   Light Mode Overrides
+   ========================================= */
+
+body.light-mode {
+  background: #f9fafb;
+  color: #0f172a;
+}
+
+/* Global text color in light mode */
+body.light-mode,
+body.light-mode p,
+body.light-mode li,
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode h5,
+body.light-mode h6,
+body.light-mode span,
+body.light-mode .meta {
+  color: #111827 !important;
+}
+
+/* Light mode: normal links stay blue, but NOT buttons */
+body.light-mode a:not(.btn) {
+  color: #2563eb !important;
+}
+
+/* Header */
+body.light-mode .site-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Sections */
+body.light-mode .hero {
+  background: #ffffff;
+}
+
+body.light-mode .section {
+  background: #ffffff;
+}
+
+body.light-mode .section-alt {
+  background: #f3f4f6;
+}
+
+/* Hero panel */
+body.light-mode .hero-panel {
+  background: #ffffff;
+  border-color: #e5e7eb;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+/* Hero buttons */
+body.light-mode .hero-actions .btn.primary {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+
+body.light-mode .hero-actions .btn.primary:hover {
+  background: #1d4ed8;
+}
+
+body.light-mode .hero-actions .btn.ghost {
+  background: transparent;
+  color: #111827;
+  border: 1px solid #d1d5db;
+}
+
+body.light-mode .hero-actions .btn.ghost:hover {
+  background: #e5e7eb;
+  border-color: #cbd5e1;
+}
+
+/* Pill list in light mode */
+body.light-mode .pill-list li,
+body.light-mode .hero-panel .pill-list li {
+  background: #e5e7eb;
+  border-color: #cbd5f5;
+  color: #111827;
+}
+
+/* Cards */
+body.light-mode .card,
+body.light-mode .info-card {
+  background: #ffffff;
+  border-color: #e5e7eb;
+}
+
+/* Timeline items */
+body.light-mode .timeline-item {
+  background: #ffffff;
+  border-color: #e5e7eb;
+}
+
+/* Footer */
+body.light-mode .site-footer {
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* If you use footer-left / footer-right in your HTML */
+body.light-mode .footer-left,
+body.light-mode .footer-right a {
+  color: #4b5563;
+}
+
+/* Chat window in light mode */
+body.light-mode #pcw-window {
+  background: #ffffff;
+  border-color: #e5e7eb;
+}
+
+body.light-mode .pcw-msg-assistant span {
+  background: #e5e7eb;
+  color: #111827;
+  border-color: #d1d5db;
+}
+
+body.light-mode #pcw-input {
+  background: #f9fafb;
+  color: #111827;
+}
+
+/* Chat header */
+body.light-mode #pcw-header {
+  background: #f3f4f6;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+body.light-mode .pcw-title {
+  color: #111827;
+}
+
+body.light-mode .pcw-subtitle {
+  color: #6b7280;
+}
+
+/* Header actions in chat */
+body.light-mode #pcw-end-btn {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+body.light-mode #pcw-end-btn:hover {
+  background: #1d4ed8;
+}
+
+body.light-mode #pcw-close-btn {
+  color: #6b7280;
+}
+
+body.light-mode #pcw-close-btn:hover {
+  color: #111827;
+}
+
+/* Suggested chips */
+body.light-mode #pcw-suggested {
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+body.light-mode .pcw-chip {
+  background: #e5e7eb;
+  border: 1px solid #cbd5e1;
+  color: #111827;
+}
+
+body.light-mode .pcw-chip:hover {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
