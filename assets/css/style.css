@@ -742,6 +742,22 @@ body.light-mode .info-card {
   border-color: #e5e7eb;
 }
 
+.card .project-link {
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+}
+
+.card .project-link a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.card .project-link a:hover {
+  text-decoration: underline;
+}
+
+
+
 /* Timeline items */
 body.light-mode .timeline-item {
   background: #ffffff;
