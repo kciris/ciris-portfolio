@@ -111,10 +111,8 @@ body.light-mode .footer-right a {
 /* Chat window in light mode */
 body.light-mode #pcw-window {
   background: #ffffff;
-  border-color: #e5e7eb;
-}
-
-body.light-mode .pcw-msg-assistant span {
+  border-color: #a8aeb8;
+  body.light-mode .pcw-msg-assistant span {
   background: #e5e7eb;
   color: #111827;
   border-color: #d1d5db;
