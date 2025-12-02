@@ -1,9 +1,6 @@
 /* =========================================
    Chat Widget (Interview Me)
    ========================================= */
-/* =========================================
-   Chat Widget (Interview Me)
-   ========================================= */
 
 /* Root container: fixed in bottom-right corner so it floats on scroll */
 #portfolio-chat-widget {
@@ -22,6 +19,26 @@
   /* no layout margins when fixed */
   margin: 0;
 }
+
+/* Chat window */
+#pcw-window {
+  position: relative; /* needed for overlay to align with this box */
+  width: 340px;
+  max-height: 520px;
+  background: #0f172a;
+  color: #e5e7eb;
+  border: 2px solid #334155; /* slate border */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.55),
+    0 0 30px rgba(59, 130, 246, 0.35);
+  margin-bottom: 70px; /* space so floating toggle button doesn't overlap */
+}
+
+
+
 
 /* Chat window */
 #pcw-window {
