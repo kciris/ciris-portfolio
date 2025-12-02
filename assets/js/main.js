@@ -63,13 +63,11 @@ if (backBtn) {
   toggleBtn.addEventListener("click", () => {
     const isLight = body.classList.toggle("light-mode");
     if (isLight) {
-      toggleBtn.textContent = "☀️ Light";
       localStorage.setItem("theme", "light");
+      toggleBtn.textContent = "☀️ Light";
     } else {
-      toggleBtn.textContent = "🌙 Dark";
       localStorage.setItem("theme", "dark");
+      toggleBtn.textContent = "🌙 Dark";
     }
   });
 })();
-
-
