@@ -1,0 +1,323 @@
+/* =========================================
+   Chat Widget (Interview Me)
+   ========================================= */
+
+/* Root container: part of normal layout, not floating over footer */
+#portfolio-chat-widget {
+  position: relative;
+  z-index: 50;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 40px 20px 0;
+}
+
+/* Chat window */
+#pcw-window {
+  position: relative; /* needed for overlay to align with this box */
+  width: 340px;
+  max-height: 520px;
+  background: #0f172a;
+  color: #e5e7eb;
+  border: 2px solid #334155;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.55),
+    0 0 30px rgba(59, 130, 246, 0.35);
+  margin-bottom: 10px;
+}
+
+/* Header */
+#pcw-header {
+  padding: 10px 12px;
+  background: #1e293b;
+  border-bottom: 1px solid #475569;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pcw-title-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.pcw-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.pcw-subtitle {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.pcw-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#pcw-close-btn {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+/* End button */
+#pcw-end-btn {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: none;
+  background: #2563eb; /* same family as Send */
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+#pcw-end-btn:hover {
+  background: #b91c1c;
+  color: #f9fafb;
+}
+
+/* =========================================
+   End-session overlay
+   ========================================= */
+
+/* Full-cover overlay *inside* the chat window */
+.pcw-session-overlay {
+  position: absolute;
+  inset: 0;
+  display: none; /* toggled via aria-hidden */
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.85);
+  z-index: 10;
+}
+
+/* Show when aria-hidden="false" */
+.pcw-session-overlay[aria-hidden="false"] {
+  display: flex;
+}
+
+.pcw-session-dialog {
+  background: #020617;
+  border-radius: 16px;
+  border: 1px solid #475569;
+  padding: 1rem 1.1rem;
+  max-width: 260px;
+  width: 90%;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
+}
+
+.pcw-session-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.pcw-session-text {
+  font-size: 0.8rem;
+  color: #cbd5f5;
+  margin-bottom: 0.75rem;
+}
+
+.pcw-session-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.pcw-session-btn {
+  font-size: 0.78rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.pcw-session-btn-secondary {
+  background: #0f172a;
+  border-color: #4b5563;
+  color: #e5e7eb;
+}
+
+.pcw-session-btn-secondary:hover {
+  background: #1f2937;
+}
+
+.pcw-session-btn-danger {
+  background: #b91c1c;
+  border-color: #dc2626;
+  color: #f9fafb;
+}
+
+.pcw-session-btn-danger:hover {
+  background: #991b1b;
+}
+
+/* =========================================
+   Suggested chips
+   ========================================= */
+
+#pcw-suggested {
+  padding: 6px 10px;
+  border-bottom: 1px solid #1f2937;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pcw-chip {
+  font-size: 0.7rem;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #e2e8f0;
+  cursor: pointer;
+}
+
+.pcw-chip:hover {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: white;
+}
+
+/* =========================================
+   Messages
+   ========================================= */
+
+#pcw-messages {
+  padding: 10px;
+  flex: 1;
+  overflow-y: auto;
+  font-size: 0.86rem;
+}
+
+.pcw-msg {
+  margin-bottom: 8px;
+}
+
+.pcw-msg-user {
+  text-align: right;
+}
+
+.pcw-msg-user span {
+  display: inline-block;
+  background: #3b82f6;
+  border: 1px solid #1d4ed8;
+  color: #ffffff;
+  padding: 6px 10px;
+  border-radius: 12px 12px 0 12px;
+  max-width: 85%;
+}
+
+.pcw-msg-assistant span {
+  display: inline-block;
+  background: #1e293b;
+  color: #e2e8f0;
+  border: 1px solid #334155;
+  padding: 6px 10px;
+  border-radius: 12px 12px 12px 0;
+  max-width: 85%;
+}
+
+/* =========================================
+   Form
+   ========================================= */
+
+#pcw-form {
+  display: flex;
+  border-top: 1px solid #1f2937;
+}
+
+#pcw-input {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  background: #0f172a;
+  border-top: 1px solid #334155;
+  color: #e5e7eb;
+  font-size: 0.85rem;
+}
+
+#pcw-input:focus {
+  outline: none;
+}
+
+#pcw-form button {
+  border: none;
+  padding: 0 14px;
+  background: #2563eb;
+  color: white;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* =========================================
+   Toggle button (non-fixed, below window)
+   ========================================= */
+
+#pcw-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 15px 30px rgba(37, 99, 235, 0.65);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+#pcw-toggle-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 34px rgba(37, 99, 235, 0.85);
+  background: #1d4ed8;
+}
+
+.pcw-toggle-icon {
+  font-size: 1.1rem;
+}
+
+.pcw-toggle-text {
+  letter-spacing: 0.3px;
+}
+
+/* Closed state hides window, keeps toggle visible */
+#portfolio-chat-widget.pcw-closed #pcw-window {
+  display: none;
+}
+
+/* =========================================
+   Responsive widget width
+   ========================================= */
+
+@media (max-width: 480px) {
+  #pcw-window {
+    width: 94vw;
+  }
+
+  #portfolio-chat-widget {
+    align-items: stretch;
+    margin-right: 3vw;
+  }
+
+  #pcw-toggle-btn {
+    align-self: flex-end;
+  }
+}
