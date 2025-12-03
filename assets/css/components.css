@@ -248,3 +248,35 @@
 .back-to-top-btn:active {
   transform: scale(0.97);
 }
+
+/* =========================================
+   Profile Status Pill (component)
+   ========================================= */
+
+.job-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+
+  margin-top: 0.35rem;
+  padding: 0.18rem 0.7rem;
+
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(148, 163, 184, 0.5);
+
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.job-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e; /* green = active */
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.22);
+}
+
+.job-status-text {
+  white-space: nowrap;
+}
