@@ -181,8 +181,21 @@
 
 .hero-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.9rem;
-  margin-bottom: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.hero-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1.2rem;
+  border-radius: 999px;
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 .hero-meta {
