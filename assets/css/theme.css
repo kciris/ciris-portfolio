@@ -189,6 +189,37 @@ body.light-mode .pcw-chip:hover {
   color: #ffffff;
 }
 
+/* Bottom bar in light mode (mirrors header) */
+body.light-mode #pcw-bottom {
+  background: #f3f4f6;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Voice Interview – light mode */
+
+body.light-mode #vaw-toggle-btn[data-state="idle"] {
+  background: linear-gradient(to right, #2563eb, #60a5fa);
+  color: #f9fafb;
+}
+
+body.light-mode #vaw-toggle-btn[data-state="listening"] {
+  background: linear-gradient(to right, #06b6d4, #0ea5e9);
+  color: #0f172a;
+}
+
+body.light-mode #vaw-toggle-btn[data-state="thinking"] {
+  background: linear-gradient(to right, #fbbf24, #f97316);
+  color: #111827;
+}
+
+body.light-mode #vaw-toggle-btn[data-state="speaking"] {
+  background: linear-gradient(to right, #22c55e, #16a34a);
+  color: #064e3b;
+}
+
+
+
+
 /* =========================================
    Profile Status Pill – light mode overrides
    ========================================= */

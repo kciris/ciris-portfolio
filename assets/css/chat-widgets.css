@@ -329,3 +329,76 @@
     align-self: flex-end;
   }
 }
+
+/* Bottom bar (mirrors pcw-header logic) */
+#pcw-bottom {
+  padding: 8px 12px;
+  background: #020617;
+  border-top: 1px solid #1f2937;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* =========================================
+   Voice Interview Widget (single button)
+   ========================================= */
+
+/* Base button inside bottom bar */
+#vaw-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.75);
+  color: #f9fafb;
+  font-size: 0.8rem;
+  transform: translateZ(0);
+}
+
+.vaw-icon {
+  font-size: 1rem;
+}
+
+.vaw-label {
+  white-space: nowrap;
+}
+
+/* ----- DARK MODE STATE COLORS ----- */
+
+/* Idle: blue (ready) */
+#vaw-toggle-btn[data-state="idle"] {
+  background: linear-gradient(to right, #1d4ed8, #2563eb);
+}
+
+/* Listening: cyan/blue + pulse */
+#vaw-toggle-btn[data-state="listening"] {
+  background: linear-gradient(to right, #06b6d4, #0ea5e9);
+  animation: vaw-pulse 1.3s ease-in-out infinite;
+}
+
+/* Thinking: amber/orange */
+#vaw-toggle-btn[data-state="thinking"] {
+  background: linear-gradient(to right, #eab308, #f97316);
+}
+
+/* Speaking: green */
+#vaw-toggle-btn[data-state="speaking"] {
+  background: linear-gradient(to right, #22c55e, #16a34a);
+}
+
+/* Subtle pulse while listening */
+@keyframes vaw-pulse {
+  0% {
+    transform: translateZ(0) scale(1);
+  }
+  50% {
+    transform: translateZ(0) scale(1.04);
+  }
+  100% {
+    transform: translateZ(0) scale(1);
+  }
+}

@@ -489,6 +489,22 @@
         <input type="text" id="pcw-input" placeholder="Ask questions as if in an interview…" autocomplete="off" />
         <button type="submit">Send</button>
       </form>
+
+       <!-- Bottom bar inside chat widget: Voice Interview button -->
+      <div id="pcw-bottom">
+        <button
+          id="vaw-toggle-btn"
+          type="button"
+          class="vaw-toggle-btn"
+          data-state="idle"
+          aria-pressed="false"
+          aria-label="Start voice interview"
+        >
+          <span class="vaw-icon" aria-hidden="true">🎙</span>
+          <span class="vaw-label">Voice Interview</span>
+        </button>
+      </div>
+
     </div>
 
     <button id="pcw-toggle-btn" type="button">
@@ -512,6 +528,8 @@
   <!-- Scripts -->
   <script src="assets/js/chat-widget.js"></script>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/voice-interview.js"></script>
+
 </body>
 
 </html>
