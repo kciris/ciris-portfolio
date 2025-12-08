@@ -64,7 +64,7 @@
             <a href="#experience">Experience</a>
             <a href="#projects">Projects</a>
             <a href="#skills">Skills</a>
-            <a href="#ai-mode-anchor" id="nav-ai-mode">AI Mode</a>
+            <a href="#ai-mode-anchor" id="nav-ai-mode">AI Tools</a>
             <a href="#contact">Contact</a>
           </nav>
         </div>
@@ -391,6 +391,46 @@
       </div>
     </section>
 
+    <!-- AI Tools section -->
+  <section id="ai-tools" class="section">
+    <div class="container">
+      <h2>AI Tools</h2>
+      <p>
+        Explore the AI tools I use to demonstrate my hands-on skills:
+        a structured chat interview and a browser-based voice interview.
+      </p>
+      
+    <div class="ai-tools-actions">
+      <!-- New: toggle button for text chat widget -->
+      <button
+        id="pcw-ai-chat-btn"
+        type="button"
+        class="ai-chat-btn"
+        aria-pressed="false"
+        aria-label="Open or close chat interview"
+      >
+        <span class="ai-chat-icon" aria-hidden="true">💬</span>
+        <span class="ai-chat-label">Interview Me (Chat)</span>
+      </button>
+
+      <!-- Existing: browser voice interview button -->
+      <button
+        id="vaw-toggle-btn"
+        type="button"
+        class="vaw-toggle-btn"
+        data-state="idle"
+        aria-pressed="false"
+        aria-label="Start browser voice interview"
+      >
+        <span class="vaw-icon" aria-hidden="true">🎙</span>
+        <span class="vaw-label">Interview Me (Browser Voice)</span>
+      </button>
+    </div>
+
+
+    </div>
+  </section>
+
     <!-- Contact -->
     <section id="contact" class="section">
       <div class="container two-column">
@@ -490,20 +530,6 @@
         <button type="submit">Send</button>
       </form>
 
-       <!-- Bottom bar inside chat widget: Voice Interview button -->
-      <div id="pcw-bottom">
-        <button
-          id="vaw-toggle-btn"
-          type="button"
-          class="vaw-toggle-btn"
-          data-state="idle"
-          aria-pressed="false"
-          aria-label="Start voice interview"
-        >
-          <span class="vaw-icon" aria-hidden="true">🎙</span>
-          <span class="vaw-label">Voice Interview</span>
-        </button>
-      </div>
 
     </div>
 

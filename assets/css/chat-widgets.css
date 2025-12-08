@@ -402,3 +402,35 @@
     transform: translateZ(0) scale(1);
   }
 }
+
+/* AI Tools section layout */
+.ai-tools-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Chat toggle button in AI Tools */
+.ai-chat-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid #1f2937;
+  cursor: pointer;
+  background: #020617;
+  color: #e5e7eb;
+  font-size: 0.8rem;
+}
+
+.ai-chat-icon {
+  font-size: 1rem;
+}
+
+.ai-chat-btn:hover {
+  background: #0f172a;
+  border-color: #4b5563;
+}
+

@@ -233,3 +233,15 @@ body.light-mode .job-status {
 body.light-mode .job-status-dot {
   box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.18);
 }
+
+/* AI Tools – chat button in light mode */
+body.light-mode .ai-chat-btn {
+  background: #ffffff;
+  border-color: #e5e7eb;
+  color: #111827;
+}
+
+body.light-mode .ai-chat-btn:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}

@@ -11,9 +11,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const messagesEl = document.getElementById("pcw-messages");
   const form = document.getElementById("pcw-form");
   const input = document.getElementById("pcw-input");
-  const chips = document.querySelectorAll(".pcw-chip");
-  const aiModeNav = document.getElementById("nav-ai-mode");
-  const aiModeAnchor = document.getElementById("ai-mode-anchor");
+
+    const chips = document.querySelectorAll(".pcw-chip");
+  const aiToolsChatBtn = document.getElementById("pcw-ai-chat-btn");
+
 
   if (!widget || !toggleBtn || !closeBtn || !messagesEl || !form || !input) {
     console.error("Chat widget elements not found in DOM.");
@@ -68,47 +69,46 @@ document.addEventListener("DOMContentLoaded", function () {
     widget.classList.add("pcw-closed");
   });
 
- // End button: show in-widget end-session overlay
-if (endBtn && sessionOverlay && sessionConfirmBtn && sessionCancelBtn) {
-  const openOverlay = () => {
-    sessionOverlay.classList.add("pcw-session-overlay--visible");
-    sessionOverlay.setAttribute("aria-hidden", "false");
-  };
+  // End button: show in-widget end-session overlay
+  if (endBtn && sessionOverlay && sessionConfirmBtn && sessionCancelBtn) {
+    const openOverlay = () => {
+      sessionOverlay.classList.add("pcw-session-overlay--visible");
+      sessionOverlay.setAttribute("aria-hidden", "false");
+    };
 
-  const closeOverlay = () => {
-    sessionOverlay.classList.remove("pcw-session-overlay--visible");
-    sessionOverlay.setAttribute("aria-hidden", "true");
-  };
+    const closeOverlay = () => {
+      sessionOverlay.classList.remove("pcw-session-overlay--visible");
+      sessionOverlay.setAttribute("aria-hidden", "true");
+    };
 
-  endBtn.addEventListener("click", function () {
-    openOverlay();
-  });
+    endBtn.addEventListener("click", function () {
+      openOverlay();
+    });
 
-  sessionCancelBtn.addEventListener("click", function (event) {
-    event.preventDefault();
-    closeOverlay();
-  });
+    sessionCancelBtn.addEventListener("click", function (event) {
+      event.preventDefault();
+      closeOverlay();
+    });
 
-  sessionConfirmBtn.addEventListener("click", function (event) {
-    event.preventDefault();
-    closeOverlay();
+    sessionConfirmBtn.addEventListener("click", function (event) {
+      event.preventDefault();
+      closeOverlay();
 
-    // New session id = new conversation on backend
-    sessionId = createSessionId();
+      // New session id = new conversation on backend
+      sessionId = createSessionId();
 
-    // Clear messages and show "session ended" + new welcome
-    clearMessages();
-    addMessage(
-      "assistant",
-      "This interview session has ended. When you’re ready, you can start a new interview with me."
-    );
+      // Clear messages and show "session ended" + new welcome
+      clearMessages();
+      addMessage(
+        "assistant",
+        "This interview session has ended. When you’re ready, you can start a new interview with me."
+      );
 
-    setTimeout(() => {
-      showWelcomeMessage();
-    }, 800);
-  });
-}
-
+      setTimeout(() => {
+        showWelcomeMessage();
+      }, 800);
+    });
+  }
 
   // Suggested question chips
   chips.forEach(function (chip) {
@@ -121,24 +121,30 @@ if (endBtn && sessionOverlay && sessionConfirmBtn && sessionCancelBtn) {
     });
   });
 
-  // AI Mode nav: scroll + open widget + focus input
-  if (aiModeNav) {
-    aiModeNav.addEventListener("click", function (e) {
-      e.preventDefault();
+  // AI Tools nav: scroll + open widget + focus input
+    // "Interview Me (Chat)" button in AI Tools section: toggle chat widget
+  if (aiToolsChatBtn) {
+    aiToolsChatBtn.addEventListener("click", function () {
+      const isClosed = widget.classList.contains("pcw-closed");
 
-      if (aiModeAnchor) {
-        aiModeAnchor.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (isClosed) {
+        // Open chat widget
+        widget.classList.remove("pcw-closed");
+
+        // Focus input after it’s visible
+        setTimeout(() => {
+          input.focus();
+        }, 300);
+
+        aiToolsChatBtn.setAttribute("aria-pressed", "true");
+      } else {
+        // Close chat widget
+        widget.classList.add("pcw-closed");
+        aiToolsChatBtn.setAttribute("aria-pressed", "false");
       }
-
-      // Open the widget if closed
-      widget.classList.remove("pcw-closed");
-
-      // Focus input after a small delay so it’s visible
-      setTimeout(() => {
-        input.focus();
-      }, 400);
     });
   }
+
 
   // Form submit: send question to backend
   form.addEventListener("submit", async function (e) {
