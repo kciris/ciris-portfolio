@@ -236,9 +236,9 @@ body.light-mode .job-status-dot {
 
 /* AI Tools – chat button in light mode */
 body.light-mode .ai-chat-btn {
-  background: #ffffff;
-  border-color: #e5e7eb;
-  color: #111827;
+  background: linear-gradient(to right, #63f17b, #aef755);
+  border-color: #067417;
+  color: #f9fafb;
 }
 
 body.light-mode .ai-chat-btn:hover {
@@ -257,4 +257,3 @@ body.light-mode .ai-voice-call-btn:hover {
   background: linear-gradient(to right, #4f46e5, #a855f7);
   border-color: #4f46e5;
 }
-
