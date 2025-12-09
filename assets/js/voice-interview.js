@@ -41,8 +41,12 @@ document.addEventListener("DOMContentLoaded", function () {
     if (next === "idle") {
       toggleBtn.setAttribute("aria-pressed", "false");
       iconSpan.textContent = "🎙";
-      labelSpan.textContent = "Voice Interview";
+      labelSpan.textContent = "Voice Interview (Browser)";
       toggleBtn.setAttribute("aria-label", "Start voice interview");
+      btn.setAttribute(
+    "aria-label",
+    "Start browser voice interview (Voice Interview, Browser)"
+  );
     } else if (next === "listening") {
       toggleBtn.setAttribute("aria-pressed", "true");
       iconSpan.textContent = "👂";
