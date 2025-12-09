@@ -1,5 +1,5 @@
 // ===============================
-// Interview Me (AI Voice Call) - PCM16 streaming
+// Interview Me (AI Voice Call) - PCM16 streaming with barge-in
 // Mic (PCM16 24kHz) -> WebSocket -> OpenAI Realtime -> PCM16 -> playback
 // ===============================
 document.addEventListener("DOMContentLoaded", function () {
@@ -9,10 +9,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const labelSpan = btn.querySelector(".ai-voice-call-label");
   const iconSpan = btn.querySelector(".ai-voice-call-icon");
 
+  // For local testing you can use: ws://localhost:8080/ai-voice-call
   const WS_URL =
     "wss://portfolio-agent-backend-djpe.onrender.com/ai-voice-call";
 
-  // State: "idle" | "connecting" | "active"
+  // State: "idle" | "connecting" | "listening" | "speaking"
   let state = "idle";
 
   // Mic + audio graph
@@ -23,6 +24,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Playback
   let playbackContext = null;
+  let playbackTime = 0; // scheduled position for streaming audio
+  let activeSources = []; // currently playing buffer sources
+
+  // Simple voice activity detection (VAD)
+  let vadSpeaking = false;
+  let vadAboveCount = 0;
+  let vadBelowCount = 0;
+  const VAD_THRESHOLD = 0.03; // adjust if too sensitive/insensitive
+  const VAD_ABOVE_FRAMES = 3; // frames above threshold to trigger "start speech"
+  const VAD_BELOW_FRAMES = 6; // frames below to trigger "end speech"
 
   // WebSocket
   let ws = null;
@@ -32,6 +43,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // -------------------------
   function setState(next) {
     state = next;
+
+    // For CSS, anything except idle is treated as "active"
     btn.dataset.state = next === "idle" ? "idle" : "active";
 
     if (!labelSpan || !iconSpan) return;
@@ -49,11 +62,16 @@ document.addEventListener("DOMContentLoaded", function () {
       iconSpan.textContent = "⏳";
       labelSpan.textContent = "Connecting…";
       btn.setAttribute("aria-label", "Connecting AI Voice Call…");
-    } else if (next === "active") {
+    } else if (next === "listening") {
       btn.setAttribute("aria-pressed", "true");
-      iconSpan.textContent = "⏹";
-      labelSpan.textContent = "Stop AI Voice Call";
-      btn.setAttribute("aria-label", "Stop AI Voice Call interview");
+      iconSpan.textContent = "🎤";
+      labelSpan.textContent = "Listening… (start speaking)";
+      btn.setAttribute("aria-label", "AI is listening to you");
+    } else if (next === "speaking") {
+      btn.setAttribute("aria-pressed", "true");
+      iconSpan.textContent = "🔊";
+      labelSpan.textContent = "Speaking… (tap to stop)";
+      btn.setAttribute("aria-label", "AI is speaking. Tap to stop.");
     }
   }
 
@@ -62,8 +80,10 @@ document.addEventListener("DOMContentLoaded", function () {
   // -------------------------
   function ensurePlaybackContext() {
     if (!playbackContext) {
-      playbackContext = new (window.AudioContext ||
-        window.webkitAudioContext)();
+      playbackContext =
+        new (window.AudioContext || window.webkitAudioContext)();
+      playbackTime = 0;
+      activeSources = [];
     }
     if (playbackContext.state === "suspended") {
       playbackContext.resume();
@@ -75,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
       ensurePlaybackContext();
 
       const int16 = new Int16Array(arrayBuffer);
-      const sampleRate = 24000; // we told Realtime we use 24kHz
+      const sampleRate = 24000; // matches Realtime + our downsampling
       const audioBuffer = playbackContext.createBuffer(
         1,
         int16.length,
@@ -84,15 +104,60 @@ document.addEventListener("DOMContentLoaded", function () {
       const channel = audioBuffer.getChannelData(0);
 
       for (let i = 0; i < int16.length; i++) {
-        channel[i] = int16[i] / 32768; // convert back to float [-1,1]
+        channel[i] = int16[i] / 32768;
       }
 
       const src = playbackContext.createBufferSource();
       src.buffer = audioBuffer;
       src.connect(playbackContext.destination);
-      src.start();
+
+      // Schedule sequentially so chunks play back-to-back
+      const now = playbackContext.currentTime;
+      const startTime = Math.max(playbackTime, now);
+      src.start(startTime);
+      playbackTime = startTime + audioBuffer.duration;
+
+      activeSources.push(src);
+      src.onended = () => {
+        activeSources = activeSources.filter((s) => s !== src);
+        // When no more AI audio is playing and call is active, go back to listening
+        if (activeSources.length === 0 && state !== "idle" && state !== "connecting") {
+          setState("listening");
+        }
+      };
+
+      // As soon as we start playing AI audio, mark as speaking
+      if (state !== "idle" && state !== "connecting") {
+        setState("speaking");
+      }
     } catch (err) {
       console.error("[AI Voice Call] Error playing PCM16 chunk:", err);
+    }
+  }
+
+  // Stop all AI audio; if hard=true, also close playback context
+  function stopPlayback(hard = false) {
+    activeSources.forEach((src) => {
+      try {
+        src.stop();
+        src.disconnect();
+      } catch (_) {}
+    });
+    activeSources = [];
+
+    if (playbackContext) {
+      if (hard) {
+        try {
+          playbackContext.close();
+        } catch (_) {}
+        playbackContext = null;
+        playbackTime = 0;
+      } else {
+        // Keep context alive; reset timeline to "now"
+        playbackTime = playbackContext.currentTime;
+      }
+    } else {
+      playbackTime = 0;
     }
   }
 
@@ -110,23 +175,27 @@ document.addEventListener("DOMContentLoaded", function () {
       sourceNode = null;
     }
     if (audioContext) {
-      // optionally close; but reuse is also OK
-      // audioContext.close().catch(() => {});
+      try {
+        audioContext.close();
+      } catch (_) {}
       audioContext = null;
     }
     if (mediaStream) {
       mediaStream.getTracks().forEach((t) => t.stop());
       mediaStream = null;
     }
+
+    // Reset VAD state
+    vadSpeaking = false;
+    vadAboveCount = 0;
+    vadBelowCount = 0;
   }
 
   function cleanupWebSocket() {
     if (ws) {
       try {
         ws.close();
-      } catch (e) {
-        // ignore
-      }
+      } catch (_) {}
       ws = null;
     }
   }
@@ -135,7 +204,49 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("[AI Voice Call] Stopping call.");
     cleanupAudioGraph();
     cleanupWebSocket();
+    stopPlayback(true); // hard: stop and close playback context
     setState("idle");
+  }
+
+  // -------------------------
+  // VAD: user speech detection
+  // -------------------------
+  function handleVadFrame(inputData) {
+    // RMS energy
+    let sum = 0;
+    for (let i = 0; i < inputData.length; i++) {
+      const s = inputData[i];
+      sum += s * s;
+    }
+    const rms = Math.sqrt(sum / inputData.length);
+
+    if (rms > VAD_THRESHOLD) {
+      vadAboveCount++;
+      vadBelowCount = 0;
+    } else {
+      vadBelowCount++;
+      vadAboveCount = 0;
+    }
+
+    // User speech starts
+    if (!vadSpeaking && vadAboveCount >= VAD_ABOVE_FRAMES) {
+      vadSpeaking = true;
+      // BARGE-IN: if AI is speaking, stop AI audio and switch to listening
+      if (state === "speaking") {
+        console.log("[AI Voice Call] Barge-in: user started speaking, stopping AI audio.");
+        stopPlayback(false); // soft stop: keep context alive
+      }
+      if (state !== "idle" && state !== "connecting") {
+        setState("listening");
+      }
+    }
+
+    // User speech ends
+    if (vadSpeaking && vadBelowCount >= VAD_BELOW_FRAMES) {
+      vadSpeaking = false;
+      // We don't have to change state here; Realtime will detect turn end
+      // and start speaking when ready. We'll flip to "speaking" when audio arrives.
+    }
   }
 
   // -------------------------
@@ -164,9 +275,7 @@ document.addEventListener("DOMContentLoaded", function () {
           "Microphone access was blocked. Please allow microphone permission for this site and try again."
         );
       } else if (err.name === "NotFoundError") {
-        alert(
-          "No microphone found. Please connect a microphone and try again."
-        );
+        alert("No microphone found. Please connect a microphone and try again.");
       } else {
         alert(
           "Could not access your microphone. Check permissions and console for details."
@@ -198,7 +307,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     ws.onclose = () => {
       console.log("[AI Voice Call] WebSocket closed.");
-      stopAiVoiceCall();
+      if (state !== "idle") {
+        stopAiVoiceCall();
+      }
     };
 
     ws.onmessage = (event) => {
@@ -231,22 +342,28 @@ document.addEventListener("DOMContentLoaded", function () {
     audioContext =
       audioContext || new (window.AudioContext || window.webkitAudioContext)();
 
-    const inputSampleRate = audioContext.sampleRate; // often 48000
+    const inputSampleRate = audioContext.sampleRate; // often 44100 or 48000
     console.log("[AI Voice Call] Input sampleRate:", inputSampleRate);
 
     sourceNode = audioContext.createMediaStreamSource(mediaStream);
 
-    // ScriptProcessorNode: simple way to pull PCM in JS
     const bufferSize = 2048;
     processorNode = audioContext.createScriptProcessor(bufferSize, 1, 1);
+
+    // Mute mic path to speakers to avoid hearing yourself / echo
+    const muteGain = audioContext.createGain();
+    muteGain.gain.value = 0;
 
     processorNode.onaudioprocess = function (event) {
       if (!ws || ws.readyState !== WebSocket.OPEN) return;
 
       const inputBuffer = event.inputBuffer;
-      const inputData = inputBuffer.getChannelData(0); // Float32Array
+      const inputData = inputBuffer.getChannelData(0);
 
-      // Downsample from inputSampleRate to 24000
+      // Run simple VAD on this frame
+      handleVadFrame(inputData);
+
+      // Downsample from inputSampleRate to 24000 and send PCM16
       const targetRate = 24000;
       const ratio = inputSampleRate / targetRate;
       const newLength = Math.floor(inputData.length / ratio);
@@ -255,20 +372,20 @@ document.addEventListener("DOMContentLoaded", function () {
       for (let i = 0; i < newLength; i++) {
         const idx = Math.floor(i * ratio);
         let s = inputData[idx];
-        // clamp
         s = Math.max(-1, Math.min(1, s));
-        // float [-1,1] -> int16
         pcm16[i] = s < 0 ? s * 0x8000 : s * 0x7fff;
       }
 
-      // Send raw PCM16 bytes to backend
       ws.send(pcm16.buffer);
     };
 
+    // Graph: mic -> processor -> muteGain (0) -> destination
     sourceNode.connect(processorNode);
-    processorNode.connect(audioContext.destination); // required in some browsers
+    processorNode.connect(muteGain);
+    muteGain.connect(audioContext.destination);
 
-    setState("active");
+    // Once audio graph is running, we are "listening"
+    setState("listening");
   }
 
   // -------------------------
@@ -293,37 +410,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Quick local beep test (not used in production, just for debugging)
-  function testBeep() {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const sampleRate = 24000;
-    const duration = 0.4; // 400 ms
-    const frames = Math.floor(sampleRate * duration);
-    const buffer = ctx.createBuffer(1, frames, sampleRate);
-    const data = buffer.getChannelData(0);
-
-    const freq = 660; // Hz
-    for (let i = 0; i < frames; i++) {
-      const t = i / sampleRate;
-      data[i] = Math.sin(2 * Math.PI * freq * t) * 0.3;
-    }
-
-    const src = ctx.createBufferSource();
-    src.buffer = buffer;
-    src.connect(ctx.destination);
-    src.start();
-  }
-
   // -------------------------
-  // Button click handler
+  // Button click handler (toggle)
   // -------------------------
   btn.addEventListener("click", () => {
-    // TEMP: test beep so you can confirm you can hear *something*
-    testBeep();
-
     if (state === "idle") {
       startAiVoiceCall();
     } else {
+      // Works as "Stop" in any non-idle state
       stopAiVoiceCall();
     }
   });
