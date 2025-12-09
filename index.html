@@ -8,11 +8,11 @@
   <meta name="description"
     content="Portfolio of Cd&apos;Kazim Ciris, PhD — Postdoctoral Fellow and Software Project Manager specializing in software development, cybersecurity, and data-driven projects." />
 
-   <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/base.css" />
   <link rel="stylesheet" href="assets/css/layout.css" />
   <link rel="stylesheet" href="assets/css/components.css" />
   <link rel="stylesheet" href="assets/css/chat-widgets.css" />
-  <link rel="stylesheet" href="assets/css/theme.css" /> 
+  <link rel="stylesheet" href="assets/css/theme.css" />
 
 
   <!-- Open Graph / LinkedIn / Facebook -->
@@ -32,15 +32,15 @@
     content="Software Project Manager · Postdoctoral Fellow · Full-Stack & DevOps Portfolio" />
   <meta name="twitter:image" content="https://kciris.github.io/ciris-portfolio/assets/img/thumbnail.jpeg" />
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-VLM92BJJD6"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VLM92BJJD6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-  gtag('config', 'G-VLM92BJJD6');
-</script>
+    gtag('config', 'G-VLM92BJJD6');
+  </script>
 
 </head>
 
@@ -55,9 +55,9 @@
           <h1>Cd&apos;Kazim Ciris, PhD</h1>
           <p class="tagline">Postdoctoral Fellow · Software Project Manager</p>
           <p class="job-status" aria-label="Current job search status">
-  <span class="job-status-dot"></span>
-  <span class="job-status-text">Exploring new opportunities</span>
-</p>
+            <span class="job-status-dot"></span>
+            <span class="job-status-text">Exploring new opportunities</span>
+          </p>
 
           <nav class="main-nav">
             <a href="#about">About</a>
@@ -93,25 +93,15 @@
           <div class="hero-actions">
             <a class="btn primary" href="#projects">View Projects</a>
             <a class="btn ghost" href="#contact">Let&apos;s Connect</a>
-<a
-    class="btn ghost"
-    href="assets/docs/Ciris_CV_Senior_Site_Reliability_DevOps_Engineer.pdf"
-    target="_blank"
-    rel="noopener"
-    download
-  >
-    Download Technical CV (PDF)
-  </a>
+            <a class="btn ghost" href="assets/docs/Ciris_CV_Senior_Site_Reliability_DevOps_Engineer.pdf" target="_blank"
+              rel="noopener" download>
+              Download Technical CV (PDF)
+            </a>
 
-  <a
-    class="btn ghost"
-    href="assets/docs/Ciris_CIT_Educator_Program_Coordinator.pdf"
-    target="_blank"
-    rel="noopener"
-    download
-  >
-    Download Academic CV (PDF)
-  </a>
+            <a class="btn ghost" href="assets/docs/Ciris_CIT_Educator_Program_Coordinator.pdf" target="_blank"
+              rel="noopener" download>
+              Download Academic CV (PDF)
+            </a>
 
           </div>
           <div class="hero-meta">
@@ -392,44 +382,41 @@
     </section>
 
     <!-- AI Tools section -->
-  <section id="ai-tools" class="section">
-    <div class="container">
-      <h2>AI Tools</h2>
-      <p>
-        Explore the AI tools I use to demonstrate my hands-on skills:
-        a structured chat interview and a browser-based voice interview.
-      </p>
-      
-    <div class="ai-tools-actions">
-      <!-- New: toggle button for text chat widget -->
-      <button
-        id="pcw-ai-chat-btn"
-        type="button"
-        class="ai-chat-btn"
-        aria-pressed="false"
-        aria-label="Open or close chat interview"
-      >
-        <span class="ai-chat-icon" aria-hidden="true">💬</span>
-        <span class="ai-chat-label">Interview Me (Chat)</span>
-      </button>
+    <section id="ai-tools" class="section">
+      <div class="container">
+        <h2>AI Tools</h2>
+        <p>
+          Explore the AI tools I use to demonstrate my hands-on skills:
+          a structured chat interview and a browser-based voice interview.
+        </p>
 
-      <!-- Existing: browser voice interview button -->
-      <button
-        id="vaw-toggle-btn"
-        type="button"
-        class="vaw-toggle-btn"
-        data-state="idle"
-        aria-pressed="false"
-        aria-label="Start browser voice interview"
-      >
-        <span class="vaw-icon" aria-hidden="true">🎙</span>
-        <span class="vaw-label">Interview Me (Browser Voice)</span>
-      </button>
-    </div>
+        <div class="ai-tools-actions">
+          <!-- New: toggle button for text chat widget -->
+          <button id="pcw-ai-chat-btn" type="button" class="ai-chat-btn" aria-pressed="false"
+            aria-label="Open or close chat interview">
+            <span class="ai-chat-icon" aria-hidden="true">💬</span>
+            <span class="ai-chat-label">Interview Me (Chat)</span>
+          </button>
+
+          <!-- Existing: browser voice interview button -->
+          <button id="vaw-toggle-btn" type="button" class="vaw-toggle-btn" data-state="idle" aria-pressed="false"
+            aria-label="Start browser voice interview">
+            <span class="vaw-icon" aria-hidden="true">🎙</span>
+            <span class="vaw-label">Interview Me (Browser Voice)</span>
+          </button>
+
+          <!-- NEW: AI Voice Call (advanced streaming pipeline) -->
+          <button id="ai-voice-call-btn" type="button" class="ai-voice-call-btn" data-state="idle" aria-pressed="false"
+            aria-label="Start AI Voice Call interview">
+            <span class="ai-voice-call-icon" aria-hidden="true">📞</span>
+            <span class="ai-voice-call-label">Interview Me (AI Voice Call)</span>
+          </button>
+
+        </div>
 
 
-    </div>
-  </section>
+      </div>
+    </section>
 
     <!-- Contact -->
     <section id="contact" class="section">
@@ -555,6 +542,7 @@
   <script src="assets/js/chat-widget.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/voice-interview.js"></script>
+  <script src="assets/js/ai-voice-call.js"></script>
 
 </body>
 

@@ -245,3 +245,16 @@ body.light-mode .ai-chat-btn:hover {
   background: #f3f4f6;
   border-color: #d1d5db;
 }
+
+/* AI Voice Call – light mode */
+body.light-mode .ai-voice-call-btn {
+  background: linear-gradient(to right, #6366f1, #a855f7);
+  border-color: #6366f1;
+  color: #f9fafb;
+}
+
+body.light-mode .ai-voice-call-btn:hover {
+  background: linear-gradient(to right, #4f46e5, #a855f7);
+  border-color: #4f46e5;
+}
+
