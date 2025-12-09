@@ -420,7 +420,7 @@
   border-radius: 999px;
   border: 1px solid #1f2937;
   cursor: pointer;
-  background: #020617;
+  background: linear-gradient(to right, #45951d, #aeed3a);
   color: #e5e7eb;
   font-size: 0.8rem;
 }
@@ -430,8 +430,8 @@
 }
 
 .ai-chat-btn:hover {
-  background: #0f172a;
-  border-color: #4b5563;
+  background: linear-gradient(to right, #38ca66, #7bf65c);
+  border-color: #38ca55;
 }
 
 /* AI Voice Call button */
